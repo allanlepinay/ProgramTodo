@@ -5,3 +5,7 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+app_program_todo:
+    path: /ProgramTodo/
+    controller: App\Controller\LogController::index
