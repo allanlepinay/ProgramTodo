@@ -23,6 +23,22 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tasks')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    private $user;
+
+    // ...
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

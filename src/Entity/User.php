@@ -19,6 +19,45 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'user')]
+    private $tasks;
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->contains($task)) {
+            $this->tasks->removeElement($task);
+            // Définir le propriétaire de la relation sur null (facultatif)
+            if ($task->getUser() === $this) {
+                $task->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
