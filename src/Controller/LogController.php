@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
+use App\Entity\Task;
+use App\Form\TaskType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,9 +38,14 @@ class LogController extends AbstractController
             if ($findUser) {
                 // Username/Password exist in database
 
+                // we need a taskForm to display it on user page
+                $task = new Task();
+                $taskForm = $this->createForm(TaskType::class, $task);
+        
                 // We send the user to his page
                 return $this->render('user/show.html.twig', [
                     'user' => $findUser,
+                    'form' => $taskForm->createView(),
                 ]);        
             } else {
                 // Username/password doesn't exist, return to signup page

@@ -21,22 +21,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/task', name: 'app_user_task')]
-    public function task(): Response
-    {
-
-        //get logged user
-        $user = new User();
-
-        //get user's tasks
-        $tasks = $user->getTasks();
-
-        return $this->render('user/task.html.twig', [
-            'controller_name' => 'UserController',
-            'user' => $user,
-        ]);
-    }
-
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository): Response
     {
