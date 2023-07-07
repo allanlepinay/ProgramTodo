@@ -9,14 +9,7 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Welcome to my TODO application !</h1>
-
-    <a href="{{ path('app_user_index') }}">Lien vers une autre page</a>
-
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.password) }}
-    {{ form_end(form) }}
-
+    <h1>Welcome {{ username }} !</h1>
+    {{ password }}
 </div>
 {% endblock %}
