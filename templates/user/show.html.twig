@@ -3,38 +3,26 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>{{ user.name }}, here is your TODO list</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
+        <tr>
                 <th>Name</th>
-                <td>{{ user.name }}</td>
-            </tr>
+                <th>Creation date</th>
+                <th>Status</th>
+        </tr>
+        {% for task in user.tasks %}
             <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
+                <td>{{ task.name }}</td>
+                <td>{{ task.creationDate }}</td>
+                <td>{{ task.status }}</td>
+                <td><a href="{{ path('app_task_edit', {'id': task.id}) }}">Edit</a></td>
             </tr>
+        {% endfor %}
         </tbody>
     </table>
 
-    Tasks
-    <ul>
-        {% for task in user.tasks %}
-            <li>{{ task.name }}  <a href="{{ path('app_task_edit', {'id': task.id}) }}">Edit</a></li>
-        {% endfor %}
-    </ul>
-
     <a href="{{ path('app_task_new') }}">Create a new task</a>
 
-    <br/>
-    <a href="{{ path('app_user_index') }}">back to list</a>
-
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

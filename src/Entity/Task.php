@@ -56,9 +56,9 @@ class Task
         return $this;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getCreationDate(): string
     {
-        return $this->CreationDate;
+        return $this->CreationDate->format('Y-m-d');
     }
 
     public function setCreationDate(\DateTimeInterface $CreationDate): static

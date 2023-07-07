@@ -30,8 +30,13 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $taskRepository->save($task, true);
+            
+            //get user infos from previous request
+            $userId = $task->getUser()->getId();
 
-            return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_show', [
+                'id' => $userId,
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('task/new.html.twig', [
