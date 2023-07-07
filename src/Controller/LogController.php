@@ -48,10 +48,10 @@ class LogController extends AbstractController
         if ($findUser) {
             // Username/Password exist in database
     
-            // We send the user to his page
-            return $this->render('user/show.html.twig', [
-                'user' => $findUser,
-            ]);        
+            // We send the user to his page     
+            return $this->redirectToRoute('app_user_show', [
+                'id' => $findUser->getId(),
+            ]);
         } else {
             // Username/password doesn't exist, return to signup page
             return $this->redirectToRoute('app_user_new', []);        
