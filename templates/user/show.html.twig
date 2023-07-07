@@ -15,7 +15,7 @@
         {% for task in user.tasks %}
             <tr>
                 <td>{{ task.name }}</td>
-                <td>{{ task.creationDate }}</td>
+                <td>{{ task.creationDateString }}</td>
                 <td>{{ task.status }}</td>
                 <td><a href="{{ path('app_task_edit', {'id': task.id}) }}">Edit</a></td>
             </tr>

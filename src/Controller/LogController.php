@@ -17,44 +17,10 @@ use Doctrine\ORM\EntityManagerInterface;
 class LogController extends AbstractController
 {
     #[Route('/log', name: 'app_log')]
-    public function index(Request $request, #[Required] EntityManagerInterface $entityManager): Response
+    public function index(): Response
     {
-        $user = new User();
-
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Get form's data
-            $username = $user->getName();
-            $password = $user->getPassword();
-
-            // We're looking for the user credentials
-            $userRepository = $entityManager->getRepository(User::class);
-            $findUser = $userRepository->findOneBy([
-                'name' => $username,
-                'password' => $password,
-            ]);
-
-            if ($findUser) {
-                // Username/Password exist in database
-        
-                // We send the user to his page
-                return $this->render('user/show.html.twig', [
-                    'user' => $findUser,
-                ]);        
-            } else {
-                // Username/password doesn't exist, return to signup page
-                return $this->render('log/signup.html.twig',[
-                    'username' => $username,
-                    'password' => $password,
-                ]);            
-            }
-        }
-    
         // Dsiplay login form
-        return $this->render('log/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('log/index.html.twig', []);
     }
 
     #[Route('/logout', name: 'logout')]
@@ -65,26 +31,54 @@ class LogController extends AbstractController
         ]);
     }
 
-    #[Route('/signup', name: 'signup')]
-    public function signup(): Response
+    #[Route('/login', name: 'login')]
+    public function login(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        // get form's data
+        $username = $request->request->get('name');
+        $password = $request->request->get('password');
+        
+        // We're looking for the user credentials
+        $userRepository = $entityManager->getRepository(User::class);
+        $findUser = $userRepository->findOneBy([
+            'name' => $username,
+            'password' => $password,
+        ]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->save($user, true);
-
+        if ($findUser) {
+            // Username/Password exist in database
+    
             // We send the user to his page
             return $this->render('user/show.html.twig', [
-                'user' => $user,
-            ]);                
+                'user' => $findUser,
+            ]);        
+        } else {
+            // Username/password doesn't exist, return to signup page
+            return $this->redirectToRoute('app_user_new', []);        
         }
-
-        return $this->renderForm('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
     }
+    
+
+    // #[Route('/signup', name: 'signup')]
+    // public function signup(Request $request, UserRepository $userRepository): Response
+    // {
+    //     $user = new User();
+    //     $form = $this->createForm(UserType::class, $user);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $userRepository->save($user, true);
+
+    //         // We send the user to the sign in page
+    //         return $this->render('log/index.html.twig', [
+    //             'form' => $form->createView(),
+    //         ]);        
+    //     }
+
+    //     return $this->renderForm('user/new.html.twig', [
+    //         'user' => $user,
+    //         'form' => $form,
+    //     ]);
+    // }
 
 }
