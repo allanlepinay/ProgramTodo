@@ -37,15 +37,10 @@ class LogController extends AbstractController
 
             if ($findUser) {
                 // Username/Password exist in database
-
-                // we need a taskForm to display it on user page
-                $task = new Task();
-                $taskForm = $this->createForm(TaskType::class, $task);
         
                 // We send the user to his page
                 return $this->render('user/show.html.twig', [
                     'user' => $findUser,
-                    'form' => $taskForm->createView(),
                 ]);        
             } else {
                 // Username/password doesn't exist, return to signup page
@@ -69,4 +64,27 @@ class LogController extends AbstractController
             'controller_name' => 'LogController',
         ]);
     }
+
+    #[Route('/signup', name: 'signup')]
+    public function signup(): Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->save($user, true);
+
+            // We send the user to his page
+            return $this->render('user/show.html.twig', [
+                'user' => $user,
+            ]);                
+        }
+
+        return $this->renderForm('user/new.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
 }

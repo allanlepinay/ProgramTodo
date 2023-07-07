@@ -11,12 +11,16 @@
 <div class="example-wrapper">
     <h1>Welcome to my TODO application !</h1>
 
-    <a href="{{ path('app_user_index') }}">Lien vers une autre page</a>
-
+    If you already have an account sign in !
+    <br/>
     {{ form_start(form) }}
     {{ form_row(form.name) }}
     {{ form_row(form.password) }}
     {{ form_end(form) }}
+    <br/><br/>
+    If you don't have an account sign up !
+    <br/>
+    <a href="{{ path('app_user_new')}}">Sign up page</a>
 
 </div>
 {% endblock %}
