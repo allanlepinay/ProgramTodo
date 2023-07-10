@@ -8,4 +8,4 @@ kernel:
 
 app_program_todo:
     path: /ProgramTodo/
-    controller: App\Controller\LogController::index
+    controller: App\Controller\DefaultController::index

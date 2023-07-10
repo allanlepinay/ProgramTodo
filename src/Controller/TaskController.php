@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/task')]
+#[Route('/home/task')]
 class TaskController extends AbstractController
 {
     #[Route('/new', name: 'app_task_new', methods: ['GET', 'POST'])]
