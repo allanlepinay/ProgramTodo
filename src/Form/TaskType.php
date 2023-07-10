@@ -24,7 +24,8 @@ class TaskType extends AbstractType
                 ],
                 'placeholder' => 'Select status',
                 'required' => true,
-            ])            //->add('user')
+            ])
+            ->add('user')
         ;
     }
 

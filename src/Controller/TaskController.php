@@ -23,19 +23,11 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // get username
-            $session = $request->getSession();
-            $attributeBag = $session->getBag('attributes');
-            $lastUsername = $attributeBag->get('_security.last_username');
-            // get username's user object
-            $findUser = $userRepository->findOneBy([
-                'name' => $lastUsername,
-            ]);
+            
             // setup field which user doesn't have to fulfill
-            $task->setUser($findUser);
             $task->setCreationDate(new \DateTime());
             $taskRepository->save($task, true);
-            
+
             //get user infos from previous request
             $userId = $task->getUser()->getId();
 
@@ -59,7 +51,12 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $taskRepository->save($task, true);
 
-            return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+            // get the user for whom task was modified
+            $user = $form->getData('user');
+
+            return $this->redirectToRoute('app_user_show', [
+                'id' => $user->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('task/edit.html.twig', [
@@ -74,7 +71,11 @@ class TaskController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->request->get('_token'))) {
             $taskRepository->remove($task, true);
         }
+        // get the user for whom task was deleted
+        $user = $task->getUser();
 
-        return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_show', [
+            'id' => $user->getId()
+        ], Response::HTTP_SEE_OTHER);
     }
 }
