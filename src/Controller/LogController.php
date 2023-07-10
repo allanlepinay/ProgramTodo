@@ -57,28 +57,5 @@ class LogController extends AbstractController
             return $this->redirectToRoute('app_user_new', []);        
         }
     }
-    
-
-    // #[Route('/signup', name: 'signup')]
-    // public function signup(Request $request, UserRepository $userRepository): Response
-    // {
-    //     $user = new User();
-    //     $form = $this->createForm(UserType::class, $user);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $userRepository->save($user, true);
-
-    //         // We send the user to the sign in page
-    //         return $this->render('log/index.html.twig', [
-    //             'form' => $form->createView(),
-    //         ]);        
-    //     }
-
-    //     return $this->renderForm('user/new.html.twig', [
-    //         'user' => $user,
-    //         'form' => $form,
-    //     ]);
-    // }
 
 }
