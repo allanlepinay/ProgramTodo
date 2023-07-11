@@ -3,44 +3,71 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            <h4 class="text-center my-3 pb-3">Please sign in</h4>
+
+            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" method="Post">
+
+              {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+              {% endif %}
+
+              {% if app.user %}
+                <div class="mb-3">
+                  You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+              {% endif %}
+
+              <div class="col">
+                <label for="inputName">Name</label>
+                <input type="text" value="{{ last_username }}" name="name" id="inputName" class="form-control" autocomplete="username" required autofocus>
+              </div>
+
+              <div class="col">
+                <label for="inputPassword">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+              </div>
+
+              <input type="hidden" name="_csrf_token"
+                     value="{{ csrf_token('authenticate') }}"
+              >
+
+              {#
+                  Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                  See https://symfony.com/doc/current/security/remember_me.html
+
+                  <div class="checkbox mb-3">
+                      <label>
+                          <input type="checkbox" name="_remember_me"> Remember me
+                      </label>
+                  </div>
+              #}
+
+              <div class="col">
+                <button class="btn btn-lg btn-primary" type="submit">
+                    Sign in
+                </button>
+              </div>
+            </form>
+
+            <div class="text-center">
+              <a href="{{ path('app_register')}}" class="btn btn-link">Register page</a>
+            </div>
+            <div class="text-center">
+              <a href="{{ path('app_default') }}" class="btn btn-link">Return to default page</a>
+            </div>
+
+          </div>
         </div>
-    {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputName">Name</label>
-    <input type="text" value="{{ last_username }}" name="name" id="inputName" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
-<br/>
-<a href="{{ path('app_register')}}">Register page</a>
-<br/>
-<a href="{{ path('app_default') }}">Return to default page</a>
 {% endblock %}

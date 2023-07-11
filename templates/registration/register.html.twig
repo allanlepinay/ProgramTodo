@@ -3,19 +3,44 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
 
-    {{ form_errors(registrationForm) }}
+            <h4 class="text-center my-3 pb-3">Register</h4>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.name) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+              {{ form_errors(registrationForm) }}
 
-    <a href="{{ path('app_default') }}">Return to default page</a>
+                <div class="row">
+                    <div class="col text-center">Name</div>
+                    <div class="text-center m-2">
+                        {{ form_widget(registrationForm.name) }}
+                    </div>
+                    <div class="col text-center">Password</div>
+                    <div class="text-center m-2">
+                        {{ form_widget(registrationForm.plainPassword) }}
+                    </div>
+                </div>
+              <div class="row text-center">
+                {{ form_row(registrationForm.agreeTerms) }}
+                <button type="submit" class="btn btn-lg btn-primary">Register</button>
+              </div>
+            </form>
+
+            <div class="text-center">
+              <a href="{{ path('app_default') }}" class="btn btn-link">Return to default page</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
