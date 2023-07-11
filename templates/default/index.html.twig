@@ -3,35 +3,42 @@
 {% block title %}Hello DefaultController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Welcome to my TODO application !</h1>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
 
-    {% if app.user %}
-        <div class="mb-3">
-        You are logged in as {{ app.user.userIdentifier }}
-        <br/>
-        Click here to view your tasks
-        <br/>
-        <a href="{{ path('app_user_show', { id: app.user.id }) }}">See my tasks</a>
+            <h4 class="text-center my-3 pb-3">Welcome to my TODO application !</h4>
+            <div>
+                {% if app.user %}
+                    <div class="row mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}
+                    </div>
+                    <a class="btn btn-primary" href="{{ path('app_user_show', { id: app.user.id }) }}">See my tasks</a>
+                {% endif %}
+                <div>
+                    If you already have an account log in !
+                    <a class="btn btn-primary m-1" href="{{ path('app_login') }}">Log in</a>
+                </div>
+                <div>
+                    If you don't have an account sign up !
+                    <a class="btn btn-primary m-1" href="{{ path('app_register')}}">Register page</a>
+                </div>
+                {% if app.user %}
+                    <div>
+                        If you want to log out, click below
+                        <a class="btn btn-secondary m-1" href="{{ path('app_logout')}}">Log out</a>
+                    </div>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    {% endif %}
-    <br/>
-    If you already have an account log in !
-    <br/>
-    <a href="{{ path('app_login') }}">Log in</a>
-    <br/>
-    If you don't have an account sign up !
-    <br/>
-    <a href="{{ path('app_register')}}">Register page</a>
-    <br/>
-    If you want to log out, click below
-    <br/>
-    <a href="{{ path('app_logout')}}">Log out</a>
+  </div>
+</section>
 
-</div>
 {% endblock %}
