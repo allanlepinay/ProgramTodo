@@ -12,24 +12,37 @@
 
             <h4 class="text-center my-3 pb-3">Register</h4>
 
-            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
-
+            <form method="post">
               {{ form_errors(registrationForm) }}
 
-                <div class="row">
-                    <div class="col text-center">Name</div>
-                    <div class="text-center m-2">
-                        {{ form_widget(registrationForm.name) }}
-                    </div>
-                    <div class="col text-center">Password</div>
-                    <div class="text-center m-2">
-                        {{ form_widget(registrationForm.plainPassword) }}
-                    </div>
+              {% if app.user %}
+                <div class="mb-3">
+                  You are logged in as {{ app.user.userIdentifier }}
                 </div>
-              <div class="row text-center">
-                {{ form_row(registrationForm.agreeTerms) }}
-                <button type="submit" class="btn btn-lg btn-primary">Register</button>
+              {% endif %}
+
+    {{ form_start(registrationForm) }}
+              <div class="col">
+                <label for="inputName">Name</label>
+                {{ form_widget(registrationForm.name, { 'attr': {'class': 'form-control', 'autocomplete': 'username', 'required': 'required', 'autofocus': 'autofocus'} }) }}
               </div>
+
+              <div class="col">
+                <label for="inputPassword">Password</label>
+                {{ form_widget(registrationForm.plainPassword, { 'attr': {'class': 'form-control', 'autocomplete': 'new-password', 'required': 'required'} }) }}
+              </div>
+
+              <div class="col">
+                <div class="checkbox mb-3">
+                  {{ form_row(registrationForm.agreeTerms) }}
+                </div>
+              </div>
+
+              <button class="btn btn-lg btn-primary" type="submit">
+                Register
+              </button>
+    {{ form_end(registrationForm) }}
+
             </form>
 
             <div class="text-center">

@@ -3,8 +3,44 @@
 {% block title %}New task{% endblock %}
 
 {% block body %}
-    <h1>Create new task</h1>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
 
-    {{ include('task/_form.html.twig') }}
+            <h4 class="text-center my-3 pb-3">Create new task</h4>
+
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col text-center">Task's name</div>
+                    <div class="text-center m-2">
+                        {{ form_widget(form.name) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">Status</div>
+                    <div class="text-center m-2">
+                        {{ form_widget(form.status) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center m-2">
+                        <button type="submit" class="btn btn-lg btn-primary">Save</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+
+            <div class="text-center">
+              <a href="{{ path('app_default') }}" class="btn btn-link">Return to default page</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
