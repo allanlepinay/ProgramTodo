@@ -3,24 +3,37 @@
 {% block title %}Access Denied{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
 
-<div class="example-wrapper">
-    <h1>Access Denied</h1>
+            <h4 class="text-center my-3 pb-3">Access Denied</h4>
 
-    {% if app.user %}
-        <div class="mb-3">
-        You are logged in as {{ app.user.userIdentifier }}
-    {% endif %}
-        <br/>
-        You are trying to access a page for which you do not have permission.        
-        <br/>
-        <a href="{{ path('app_user_show', { id: app.user.id }) }}">See my tasks</a>
-        <br/>
-        <a href="{{ path('app_default') }}">Return to default page</a>
+            {% if app.user %}
+              <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}
+              </div>
+            {% endif %}
+
+            <div class="alert alert-warning text-center" role="alert">
+              You are trying to access a page for which you do not have permission.
+            </div>
+
+            <div class="text-center mt-4">
+              <a href="{{ path('app_user_show', { id: app.user.id }) }}" class="btn btn-primary">See my tasks</a>
+            </div>
+
+            <div class="text-center mt-3">
+              <a href="{{ path('app_default') }}" class="btn btn-link">Return to default page</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>
 {% endblock %}
